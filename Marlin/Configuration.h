@@ -530,7 +530,7 @@
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   { 81.5, 81.5, 2577.46, 94 }
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 2560, 93 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80.67, 80.60, 2560, 98 } // 80, 80, 2560, 93 PJC
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -690,7 +690,7 @@
  *    (0,0)
  */
 #define X_PROBE_OFFSET_FROM_EXTRUDER 67 // PJC 6  // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 2 // PJC -43  // Y offset: -front +behind [the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 0 // PJC -43  // Y offset: -front +behind [the nozzle]
 #define Z_PROBE_OFFSET_FROM_EXTRUDER -2.6 // PJC -0.9  // Z offset: -below +above  [the nozzle]
 
 // X and Y axis travel speed (mm/m) between probes
@@ -916,7 +916,7 @@
 #if ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 3
+  #define GRID_MAX_POINTS_X 5
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
@@ -935,7 +935,7 @@
 
     // Beyond the probed grid, continue the implied tilt?
     // Default is to maintain the height of the nearest edge.
-    //#define EXTRAPOLATE_BEYOND_GRID
+    #define EXTRAPOLATE_BEYOND_GRID // PJC
 
     //
     // Experimental Subdivision of the grid by Catmull-Rom method.
@@ -1078,19 +1078,22 @@
  *    +-------------->X     +-------------->X     +-------------->Y
  *     XY_SKEW_FACTOR        XZ_SKEW_FACTOR        YZ_SKEW_FACTOR
  */
-//#define SKEW_CORRECTION
+#define SKEW_CORRECTION
 
 #if ENABLED(SKEW_CORRECTION)
   // Input all length measurements here:
-  #define XY_DIAG_AC 282.8427124746
+/*  #define XY_DIAG_AC 282.8427124746
   #define XY_DIAG_BD 282.8427124746
-  #define XY_SIDE_AD 200
+  #define XY_SIDE_AD 200 */
+  #define XY_DIAG_AC 141.9 // PJC
+  #define XY_DIAG_BD 140.9
+  #define XY_SIDE_AD 100.
 
   // Or, set the default skew factors directly here
   // to override the above measurements:
-  #define XY_SKEW_FACTOR 0.0
+  //#define XY_SKEW_FACTOR 0.0 // PJC
 
-  //#define SKEW_CORRECTION_FOR_Z
+  #define SKEW_CORRECTION_FOR_Z // PJC
   #if ENABLED(SKEW_CORRECTION_FOR_Z)
     #define XZ_DIAG_AC 282.8427124746
     #define XZ_DIAG_BD 282.8427124746
@@ -1098,7 +1101,7 @@
     #define YZ_DIAG_BD 282.8427124746
     #define YZ_SIDE_AD 200
     #define XZ_SKEW_FACTOR 0.0
-    #define YZ_SKEW_FACTOR 0.0
+    #define YZ_SKEW_FACTOR -0.008259825279175119 // PJC 0.0
   #endif
 
   // Enable this option for M852 to set skew at runtime
